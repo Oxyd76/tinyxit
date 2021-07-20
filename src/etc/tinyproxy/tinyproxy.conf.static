@@ -1,0 +1,32 @@
+User tinyproxy
+Group tinyproxy
+PidFile "/var/run/tinyproxy/tinyproxy.pid"
+
+Port 8888
+Listen 127.0.0.1
+Timeout 600
+
+DefaultErrorFile "/usr/share/tinyproxy/default.html"
+StatFile "/usr/share/tinyproxy/stats.html"
+
+Syslog On
+# Set the logging level. Allowed settings are:
+#	Critical, Error, Warning, Notice, Connect, Info
+LogLevel Error
+
+MaxClients 100
+MinSpareServers 5
+MaxSpareServers 20
+StartServers 10
+MaxRequestsPerChild 0
+
+Allow 127.0.0.1
+
+ViaProxyName "tinyproxy"
+
+## Parent proxy for TOR hosts
+upstream socks5 127.0.0.1:9050 ".onion"
+## Parent proxy for I2P hosts
+upstream socks5 127.0.0.1:4447 ".i2p"
+
+##### End of static configuration #####

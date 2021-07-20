@@ -1,0 +1,11 @@
+[Unit]
+Description=Zapret Info daily update service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+User=tinyproxy
+Group=tinyproxy
+ExecStartPre=/usr/bin/git -C /usr/local/lib/z-i pull
+ExecStart=+/usr/bin/systemctl try-restart tinyproxy.service

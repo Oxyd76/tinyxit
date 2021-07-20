@@ -1,0 +1,12 @@
+[Unit]
+After=z-i-prepare.service
+Wants=z-i-prepare.service
+
+[Service]
+Type=oneshot
+User=tinyproxy
+Group=tinyproxy
+Environment="PATH=/usr/local/bin:/usr/sbin:/usr/bin"
+ExecStart=tinyproxy-cfg-gen.sh
+StandardOutput=file:/run/tinyproxy/tinyproxy.conf
+StandardError=file:/dev/null

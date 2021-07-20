@@ -1,0 +1,17 @@
+[Unit]
+Description=Zapret Info repository cloner
+ConditionPathExists=|!/usr/local/lib/z-i/dump.csv
+ConditionFileNotEmpty=|!/usr/local/lib/z-i/dump.csv
+Wants=local-fs.target
+After=local-fs.target
+Wants=network.target
+After=network.target
+
+[Service]
+Type=oneshot
+User=tinyproxy
+Group=tinyproxy
+ExecStartPre=+/usr/bin/mkdir -p /usr/local/lib/z-i
+ExecStartPre=+/usr/bin/chown tinyproxy:tinyproxy /usr/local/lib/z-i
+ExecStartPre=+/usr/bin/chmod 0750 /usr/local/lib/z-i
+ExecStart=git clone --depth 1 https://github.com/zapret-info/z-i.git /usr/local/lib/z-i
